@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        
+        <!-- Link external CSS to this file -->
+        <link rel="stylesheet" href="style.css">
+
+        <!-- JS scripting - this can also be external! But IDK prolly ignore it for now. -->
+        <script>
+            var hasAdded = false;
+
+            // Func to add an href to the "test_link" element
+            function addHref() {
+                if (hasAdded) return;
+                var element = document.getElementById("test_link");
+                element.setAttribute("href", "https://www.google.com/");
+                hasAdded = true;
+            }
+
+            // Func to remove an href from the "test_link" element
+            function removeHref() {
+                if (!hasAdded) return;
+                var element = document.getElementById("test_link");
+                element.removeAttribute("href");
+                hasAdded = false;
+            }
+        </script>
+    </head>
+
+    <!-- Example body-->
+    <body>
+        <h1>Demo</h1>
+
+        <!-- The actual link in question - hover over to do stuff -->
+        <a id="test_link" target="_blank">Link</a>
+
+        <!-- Extra shit to make the link actually function -->
+        <h2 style="margin-top: 50px;">Change Link Functionality</h2>
+        <p>Use JavaScript to add or remove an href to Google for the link above</p>
+        <button onclick="addHref()">Add href</button>
+        <button onclick="removeHref()">Remove href</button>
+    </body>
+</html>
