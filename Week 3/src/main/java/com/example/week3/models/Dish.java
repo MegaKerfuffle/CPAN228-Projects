@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+// Rob Brzostek, N01556942
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

@@ -6,17 +6,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.week3.models.Dish;
 import com.example.week3.services.DishService;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 
-
+// Rob Brzostek, N01556942
 @Controller
-@RequestMapping("/")
 public class HomeController {
     @Autowired
     DishService dishService;
@@ -24,31 +21,84 @@ public class HomeController {
     @Value("${restaurant.name}")
     public String name;
  
+
+    /**
+     * Returns the home page template.
+     */
     @GetMapping("/home")
     public String getHome(Model model) {
-        model.addAttribute("restaurantName", name);
-        return "home";
-    } 
-
-    @GetMapping("/menu")
-    public String getMemu(Model model) {
-        model.addAttribute("restaurantName", name);
-		model.addAttribute("dishes", dishService.getDishes());
-        return "menu";
+        return getTemplate("home", model);
     }
 
-    @GetMapping("/add_dish")
-    public String getMethodName(Model model) {
-        model.addAttribute("restaurantName", name);
+
+    /**
+     * Returns the menu page template.
+     */
+    @GetMapping("/menu")
+    public String getMenu(Model model) {
+		model.addAttribute("dishes", dishService.getDishes());
+        return getTemplate("menu", model);
+    } 
+
+
+    /**
+     * Returns the add dishes form page, with an attribute for
+     * adding new dishes to the repository.
+     */
+    @GetMapping("/add-dish")
+    public String getAddDish(Model model) {
         model.addAttribute("item", new Dish());
-        return "add_dish";
+        return getTemplate("add_dish", model);
+    }
+
+    
+    /**
+     * Handle incoming post requests for adding a dish. Returns 
+     * to menu page when complete.
+     */
+    @PostMapping("/post-dish")
+    public String postNewDish(Model model, @ModelAttribute Dish dish) {
+        // Validate dish and return to menu
+        validateNewDish(model, dish);
+        return getMenu(model);
     }
     
 
-    @PostMapping("/post-")
-    public String postMethodName(Model model, @ModelAttribute Dish dish) {
-        model.addAttribute("dish", dish);
-        return "menu";
+    /**
+     * Check if the new dish can be added, and do so if possible.
+     * Adds a status attribute to the given Model, that can be
+     * either 'success' or 'failure'.
+     */
+    private void validateNewDish(Model model, Dish dish) {
+        String status = "success";
+        String report = "Succesfully added dish!";
+
+        // Fail if ID given is invalid
+        if (dish.getId() <= dishService.getLastDishId()) {
+            status = "failure";
+            report = "Failed to add dish - ID already used!";
+            model.addAttribute(status, report);
+            return;
+        }
+        // Fail if couldn't add to repository
+        if (!dishService.tryAddDish(dish)) {
+            status = "failure";
+            report = "Failed to add dish - internal error!";
+            model.addAttribute(status, report);
+            return;
+        }
+        
+        // Add the attribute
+        model.addAttribute(status, report);
+    }
+
+    /**
+     * Abstracts out common logic from the get methods
+     * below, to simplify the process of adding new pages.
+     */
+    private String getTemplate(String template, Model model) {
+        model.addAttribute("restaurantName", name);
+        return template;
     }
     
 }

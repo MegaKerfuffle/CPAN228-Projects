@@ -1,4 +1,8 @@
 .content {
-    width: 500px;
-    text-align: center;
+    background-color: beige;
+    border-radius: 0 0 10px 10px;
+}
+
+img {
+    border: 1px black solid;
 }
