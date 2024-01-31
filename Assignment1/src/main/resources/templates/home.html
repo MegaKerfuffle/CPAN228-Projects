@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title th:text="${libraryName}"></title>
+        <div th:replace="~{/fragments.html :: bootstrap}"></div>
+    </head>
+    <body class="m-2">
+        <div th:replace="~{/fragments.html :: navbar}"></div>
+        <div class="m-2">
+            <h1>The busiest library system in the World</h1>
+            <p>
+                That is technically a true fact, if you only consider urban, neighborhood-based library systems.
+                I'm doing this assignment at my local TPL branch, actually.
+            </p>
+            <a class="btn btn-primary" href="/catalogue" role="button">Browse the Catalogue</a>
+            
+            <img alt="Interior view of the Toronto Reference Library" class="img-fluid mt-3" src="https://media.blogto.com/articles/20201016-tpl-2.jpg?w=2048&cmd=resize_then_crop&height=1365&quality=100">
+            <p><i>Image credit: <a href="https://www.blogto.com/city/2020/10/toronto-public-library-covid-19/">BlogTO</a></i></p>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8" img>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title th:text="${libraryName}"></title>
+        <div th:replace="~{/fragments.html :: bootstrap}"></div>
+    </head>
+    <body class="m-2">
+        <!-- Navbar -->
+        <div th:replace="~{/fragments.html :: navbar}"></div>
+
+        <h1 class="p-2">Add a Book</h1>
+        
+        <!-- Form -->
+        <div class="p-2">
+            <form method="POST" th:object="${newBook}" th:action="@{/post-book}">
+                <div class="form-group">
+                    <label>ID#</label>
+                    <!-- This looks a little silly, but the readonly input looked worse. -->
+                    <b><p th:text="${newBook.id}"></p></b>
+                </div>
+                <div class="form-group">
+                    <label>Title</label>
+                    <input type="text" class="form-control" th:field="*{title}">
+                </div>
+                <div class="form-group">
+                    <label>Author</label>
+                    <input type="text" class="form-control" th:field="*{author}">
+                </div>
+                <div class="form-group">
+                    <label>Price</label>
+                    <input type="number" step="0.01" class="form-control" th:field="*{price}">
+                </div>
+                <button type="submit" class="btn btn-primary mt-3">Add Book</button>
+            </form>
+        </div>
+
+    </body>
+</html>

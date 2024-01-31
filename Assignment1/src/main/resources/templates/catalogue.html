@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title th:text="${libraryName}"></title>
+        <div th:replace="~{/fragments.html :: bootstrap}"></div>
+    </head>
+    <body class="m-2">
+        <!-- Navbar fragment -->
+        <div th:replace="~{/fragments.html :: navbar}"></div>
+
+        <h1 class="p-2">Catalogue</h1>
+
+        <!-- Cards-->
+        <div class="p-2">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                  <h5 class="card-title">Book Management</h5>
+                  <p class="card-text">Wanna spice up the catalogue?</p>
+                  <a href="/add-book" class="btn btn-primary">Add a Book</a>
+                </div>
+              </div>
+        </div>
+
+        <!-- Alerts-->
+        <div class="p-2">
+            <div class="alert alert-success" role="alert" th:if="${success}">
+                <span th:text="${success}"></span>
+            </div>
+
+            <div class="alert alert-danger" role="alert" th:if="${failure}">
+                <span th:text="${failure}"></span>
+            </div>
+        </div>
+
+        <!-- Books Table -->
+        <div>
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">ID#</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Author</th>
+                    <th scope="col">Price</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr th:each="book: ${books}">
+                    <th scope="row" th:text="${book.id}"></th>
+                    <td th:text="${book.title}"></td>
+                    <td th:text="${book.author}"></td>
+                    <td th:text="${book.price}"></td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
+        
+    </body>
+</html>

@@ -1,0 +1,5 @@
+{"properties": [{
+  "name": "library.name",
+  "type": "java.lang.String",
+  "description": "Name of the library being served"
+}]}
