@@ -1,5 +1,5 @@
 INSERT INTO dish(name, category, price)
 VALUES
-    ('Pizza', 'Non-Veg', 12),
-    ('Chicken Sandwich', 'Non-Veg', 18),
+    ('Pizza', 'Non-veg', 12),
+    ('Chicken Sandwich', 'Non-veg', 18),
     ('Shawarma', 'Vegan', 10);
