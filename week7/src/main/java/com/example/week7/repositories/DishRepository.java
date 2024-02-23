@@ -1,10 +1,11 @@
-package com.example.week6.repositories;
+package com.example.week7.repositories;
 
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.example.week6.models.Dish;
+import com.example.week7.models.Dish;
+
 import java.util.List;
 
 

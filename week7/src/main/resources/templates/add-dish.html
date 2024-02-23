@@ -16,7 +16,7 @@
             <h1> <span th:text="${restaurantName}"></span> Menu</h1>
             
             <!-- Form for adding or modifying dishes -->
-            <form th:object="${item}" method="post" th:action="@{item.name == null ? '/restaurant/add-dish' : '/restaurant/update-dish'}" style="border: 1px black solid; padding: 15px; border-radius: 10px;">
+            <form th:object="${item}" method="post" th:action="@{item.name == null ? '/admin/add-dish' : '/admin/update-dish'}" style="border: 1px black solid; padding: 15px; border-radius: 10px;">
                 <h3>Dish Form</h3>
                 <input type="hidden" th:field="*{id}">
                 <div class="form-group">

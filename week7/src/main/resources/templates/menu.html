@@ -56,8 +56,8 @@
                         <td th:text="${dish.category}"></td>
                         <td th:text="${dish.price}"></td>
                         <td>
-                            <a class="btn btn-danger btn-sm" th:href="@{/restaurant/delete/{id}(id=${dish.id})}">Delete</a>
-                            <a class="btn btn-primary btn-sm" th:href="@{/restaurant/update/{id}(id=${dish.id})}">Update</a>
+                            <a class="btn btn-danger btn-sm" th:href="@{/admin/delete/{id}(id=${dish.id})}">Delete</a>
+                            <a class="btn btn-primary btn-sm" th:href="@{/admin/update/{id}(id=${dish.id})}">Update</a>
                         </td>
                     </tr>
                 </tbody>
@@ -75,9 +75,10 @@
                 <!-- Numbers & next/prev buttons -->
                 <ul class="pagination">
                     <!-- Prev page btn -->
-                    <li class="page-item"><a class="page-link" th:href= "@{${currentPage} - 1}">Previous</a></li>
+                    <li class="page-item"><a class="page-link" th:if="${currentPage > 1}" th:href= "@{${currentPage} - 1}">Previous</a></li>
                     
                     <!-- Page numbers -->
+                    <!-- FIXME: Number buttons no work -->
                     <li class="page-item" th:each="i : ${#numbers.sequence(1, totalPages)}">
                         <a class="page-link"  th:href="@{${i} + '&sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection}}">
                             <span th:text="${i}"></span>
@@ -85,12 +86,12 @@
                     </li>
                     
                     <!-- Next page btn -->
-                    <li class="page-item"><a class="page-link" th:href= "@{${currentPage} + 1}">Next</a></li>
+                    <li class="page-item"><a class="page-link" th:if="${currentPage < totalPages}" th:href= "@{${currentPage} + 1}">Next</a></li>
                 </ul>
             </nav>
 
             <!-- Button for adding dishes -->
-            <a class="btn btn-primary" href="/restaurant/add-dish">Add Dish</a>
+            <a class="btn btn-primary" href="/admin/add-dish">Add Dish</a>
         </div>
         
         

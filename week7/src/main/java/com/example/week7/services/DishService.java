@@ -1,4 +1,4 @@
-package com.example.week6.services;
+package com.example.week7.services;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,11 +8,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
-import com.example.week6.models.Dish;
-import com.example.week6.repositories.DishRepository;
+import com.example.week7.models.Dish;
+import com.example.week7.repositories.DishRepository;
 
 @Service
 public class DishService {

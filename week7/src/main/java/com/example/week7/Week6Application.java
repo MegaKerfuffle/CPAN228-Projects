@@ -1,19 +1,17 @@
-package com.example.week6;
+package com.example.week7;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.example.week6.models.Dish;
-import com.example.week6.services.DishService;
+import com.example.week7.models.Dish;
+import com.example.week7.services.DishService;
 
 @SpringBootApplication
 public class Week6Application implements CommandLineRunner {
 
 	private final DishService service;
 
-	@Autowired
 	public Week6Application(DishService service) {
 		this.service = service;
 	}
