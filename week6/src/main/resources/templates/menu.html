@@ -13,7 +13,7 @@
     <div class="main">
         <header th:include= "~{@{/fragments/header.html}}"></header>
         <div class="content mb-5">
-            <h1> <span th:text="${restaurantName}"></span> Menu</h1>
+            <h1 class="m-2 pb-4"> <span th:text="${restaurantName}"></span> Menu</h1>
             
             <!-- Alerts -->
             <div>
@@ -21,6 +21,7 @@
             </div>
             
             <!-- Filtering -->
+            <!-- TODO: Add reset button -->
             <!-- <form class="mb-2" th:action="@{/restaurant/menu}" method="get">
                 <input type="text" name="category" placeholder="Category"/>
                 <input type="number" name="price" placeholder="Price"/>
@@ -95,7 +96,7 @@
         
         
         <!-- Include fragment for footer -->
-        <footer th:include= "@{/fragments/footer.html}"></footer>
+        <footer th:include= "~{@{/fragments/footer.html}}"></footer>
     </div>        
 </body>
 </html>
