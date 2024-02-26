@@ -15,13 +15,14 @@ import com.example.week7.services.DishService;
 
 @Controller
 @RequestMapping("/admin")
-public class AdminController extends RestaurantController {
+public class AdminController extends ViewControllerBase {
 
-
+    /** CTOR for dependency injection of `DishService` */
     protected AdminController(DishService dishService) {
         super(dishService);
     }
 
+    // Below endpoints now require a logged in admin user
 
 
     @GetMapping("/add-dish")
@@ -32,7 +33,7 @@ public class AdminController extends RestaurantController {
 
     @PostMapping("/add-dish")
     public String postAddDish(@ModelAttribute Dish dish) {
-        // Add a dish
+        // Save the dish, redirect to menu w/ success message
         dishService.saveDish(dish);
         return "redirect:/restaurant/menu/1?msg=Dish added successfully!";
     }
@@ -55,7 +56,6 @@ public class AdminController extends RestaurantController {
         model.addAttribute("msg", status);
         return "redirect:/restaurant/menu/1?msg=" + status;  
     }
-
 
     @GetMapping("/update/{id}")
     public String updateDish(Model model, @PathVariable int id) {

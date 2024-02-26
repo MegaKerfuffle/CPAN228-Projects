@@ -7,10 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.example.week7.services.DishService;
 
-
 @Controller
 public class AuthController 
-    extends RestaurantController
+    extends ViewControllerBase
     implements ErrorController {
 
     protected AuthController(DishService dishService) {
@@ -18,17 +17,16 @@ public class AuthController
     }
 
 
+    // This isn't just for 403's - meaning, it could block
+    // the wall of text errors that Spring spits out, which
+    // are helpful sometimes while working on the project
     @GetMapping("/error")
     public String getError403(Model model) {
         return getTemplate("auth/error", model);
     }
 
-
     @GetMapping("/login")
     public String getLogin(Model model) {
         return getTemplate("auth/login", model);
     }
-    
-
-
 }

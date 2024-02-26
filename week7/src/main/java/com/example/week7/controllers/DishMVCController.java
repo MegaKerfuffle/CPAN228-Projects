@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 @RequestMapping("/restaurant")
-public class DishMVCController extends RestaurantController {
+public class DishMVCController extends ViewControllerBase {
 
-
+    /** CTOR for dependency injection of `DishService */
     protected DishMVCController(DishService dishService) {
         super(dishService);
     }
@@ -48,7 +48,6 @@ public class DishMVCController extends RestaurantController {
 
         // Get our page using the params
         Page<Dish> page = dishService.getPaginatedDishes(pageNum, pageSize, sortField, sortDirection);
-        
 
         // Add attributes
         model.addAttribute("dishes", page.getContent());

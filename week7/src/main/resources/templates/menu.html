@@ -75,18 +75,17 @@
                 <!-- Numbers & next/prev buttons -->
                 <ul class="pagination">
                     <!-- Prev page btn -->
-                    <li class="page-item"><a class="page-link" th:if="${currentPage > 1}" th:href= "@{${currentPage} - 1}">Previous</a></li>
+                    <li class="page-item"><a class="page-link" th:if="${currentPage > 1}" th:href= "@{${currentPage} - 1 + '?sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection}}">Previous</a></li>
                     
                     <!-- Page numbers -->
-                    <!-- FIXME: Number buttons no work -->
                     <li class="page-item" th:each="i : ${#numbers.sequence(1, totalPages)}">
-                        <a class="page-link"  th:href="@{${i} + '&sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection}}">
+                        <a class="page-link"  th:href="@{${i} + '?sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection}}">
                             <span th:text="${i}"></span>
                         </a>
                     </li>
                     
                     <!-- Next page btn -->
-                    <li class="page-item"><a class="page-link" th:if="${currentPage < totalPages}" th:href= "@{${currentPage} + 1}">Next</a></li>
+                    <li class="page-item"><a class="page-link" th:if="${currentPage < totalPages}" th:href= "@{${currentPage} + 1 + '?sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection}}">Next</a></li>
                 </ul>
             </nav>
 
