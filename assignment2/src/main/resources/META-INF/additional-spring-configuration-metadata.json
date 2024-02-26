@@ -1,0 +1,12 @@
+{"properties": [
+  {
+    "name": "business.name",
+    "type": "java.lang.String",
+    "description": "Name of the business client the app is deployed for"
+  },
+  {
+    "name": "page.size",
+    "type": "java.lang.String",
+    "description": "Number of items to show per page in catalog"
+  }
+]}

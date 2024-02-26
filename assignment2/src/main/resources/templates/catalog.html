@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title th:text="${businessName}"></title>
+
+        <!-- Bootstrap -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        <link rel="stylesheet" th:href="@{/css/style.css}">
+    </head>
+    <body>
+        <div class="main">
+            <div class="content mb-5">
+                <h1 class="m-2 pb-4"> <span th:text="${businessName}"></span> Catalog </h1>
+                
+                <!-- Alerts -->
+                <div>
+                    <div class="alert alert-primary" role="alert" th:if= "${alert}" th:text="${alert}"></div>
+                </div>
+                
+                <!-- Filtering -->
+                <form class="mb-2" method="get" th:action="@{/catalog/1}">
+                    <input type="text" name="brand" placeholder="Brand"/>
+                    <input type="number" name="year" placeholder="Year"/>
+                    <button type="submit" class="btn btn-primary">Filter</button>
+                    <a type="reset" class="btn btn-danger" href="/catalog/1">Reset</a>
+                </form>
+                
+                
+                <!-- Menu table -->
+                <table class="table table-dark">
+                    <thead>
+                        <tr>
+                            <th scope="col">
+                                <a th:href= "@{'?sortField=id&sortDirection=' + ${reverseSort}}">ID#</a>    
+                            </th>
+                            <th scope="col">
+                                <a th:href= "@{'?sortField=name&sortDirection=' + ${reverseSort}}">NAME</a>    
+                            </th>
+                            <th scope="col">
+                                <a th:href= "@{'?sortField=brand&sortDirection=' + ${reverseSort}}">BRAND</a>    
+                            </th>
+                            <th scope="col">
+                                <a th:href= "@{'?sortField=year&sortDirection=' + ${reverseSort}}">YEAR</a>    
+                            </th>
+                            <th scope="col">
+                                <a th:href= "@{'?sortField=price&sortDirection=' + ${reverseSort}}">PRICE</a>    
+                            </th>
+                            <th scope="col">ACTIONS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Template used for each Item -->
+                        <tr th:each= "item:${items}">
+                            <th scope="row" th:text="${item.id}"></th>
+                            <td th:text="${item.name}"></td>
+                            <td th:text="${item.brand}"></td>
+                            <td th:text="${item.year}"></td>
+                            <td th:text="${item.price}"></td>
+                            <td>
+                                <!-- th:href="@{/restaurant/delete/{id}(id=${dish.id})}" -->
+                                <!-- th:href="@{/restaurant/update/{id}(id=${dish.id})}" -->
+                                <a class="btn btn-danger btn-sm">Delete</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+    
+                <!-- Pagination -->
+                <nav aria-label="Page navigation example" th:if= "${totalItems}">
+                    <!-- Info -->
+                    <div style="text-align: center;">
+                        <p>Total Items: <span th:text="${totalItems}"></span></p>
+                        <p>Page <span th:text="${currentPage}"></span> of <span th:text="${totalPages}"></span></p>
+                    </div>
+                    <p ></p>
+    
+                    <!-- Numbers & next/prev buttons -->
+                    <ul class="pagination">
+                        <!-- Prev page btn -->
+                        <li class="page-item"><a class="page-link" th:if="${currentPage - 1 > 0}" th:href= "@{${currentPage} - 1}">Previous</a></li>
+                        
+                        <!-- Page numbers -->
+                        <li class="page-item" th:each="i : ${#numbers.sequence(1, totalPages)}">
+                            <a class="page-link"  th:href="@{${i} + '?sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection}}">
+                                <span th:text="${i}"></span>
+                            </a>
+                        </li>
+                        
+                        <!-- Next page btn -->
+                        <li class="page-item"><a class="page-link" th:if="${currentPage < totalPages}" th:href= "@{${currentPage} + 1}">Next</a></li>
+                    </ul>
+                </nav>
+            </div>
+
+            <div th:if="${item}">
+                <!-- Form for adding items -->
+                <form th:object="${item}" method="post" th:action="@{/add-item}">
+                    <h3>Item Form</h3>
+                    <input type="hidden" th:field="*{id}">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input th:field="*{name}" type="text" class="form-control" id="name">
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Brand</label>
+                        <input th:field="*{brand}" type="text" class="form-control" id="brand">
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Year</label>
+                        <input th:field="*{year}" type="number" class="form-control" id="year">
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Price</label>
+                        <input th:field="*{price}" type="number" class="form-control" id="price">
+                    </div>
+                    <br/>
+                    <button type="submit" class="btn btn-primary">Add Item</button>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
