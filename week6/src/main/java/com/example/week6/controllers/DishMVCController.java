@@ -1,15 +1,17 @@
-package com.example.week5.controllers;
+package com.example.week6.controllers;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.example.week5.models.Dish;
-import com.example.week5.services.DishService;
+import com.example.week6.models.Dish;
+import com.example.week6.services.DishService;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -24,6 +26,9 @@ public class DishMVCController {
     @Value("${restaurant.name}")
     private String name;
 
+    @Value("${page.size}")
+    private int pageSize;
+
     // Constructor injection for the `DishService`
     // (better than field injection for immutability)
     public DishMVCController(DishService service) {
@@ -37,9 +42,43 @@ public class DishMVCController {
     }
 
     @GetMapping("/menu")
-    public String getMenu(Model model, @RequestParam(required=false) String msg) {
-        model.addAttribute("dishes", service.getAllDishes());
+    public String getMenuRedirect() {
+        return "redirect:/restaurant/menu/1";
+    }
+    
+    @GetMapping("/menu/{pageNum}")
+    public String getMenu(
+            Model model, 
+            @PathVariable int pageNum,
+            @RequestParam(required=false) String msg, 
+            @RequestParam(required=false) String sortField,
+            @RequestParam(required=false) String sortDirection
+            ) {
+
+        // TODO: re-add filtering
+        
+        // Null checks for params
+        sortField = sortField == null ? "id" : sortField;
+        sortDirection = sortDirection == null ? "asc" : sortDirection;
+
+        // Get our page using the params
+        Page<Dish> page = service.getPaginatedDishes(pageNum, pageSize, sortField, sortDirection);
+        
+
+        // Add attributes
+        model.addAttribute("dishes", page.getContent());
         model.addAttribute("msg", msg);
+
+        // Pagination info
+        model.addAttribute("totalItems", service.getAllDishes().size());
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("currentPage", pageNum);
+
+        // Sorting info
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDirection", sortDirection);
+        model.addAttribute("reverseSort", sortDirection.equals("asc") ? "desc" : "asc");
+
         return getTemplate("menu", model);
     }
     
@@ -53,13 +92,13 @@ public class DishMVCController {
     public String postAddDish(@ModelAttribute Dish dish) {
         // Add a dish
         service.saveDish(dish);
-        return "redirect:/restaurant/menu?msg=Dish added successfully!";
+        return "redirect:/restaurant/menu/1?msg=Dish added successfully!";
     }
     
     @PostMapping("/update-dish")
     public String postUpdateDish(@ModelAttribute Dish dish) {
         service.saveDish(dish);
-        return "redirect:/restaurant/menu?msg=Dish updated successfully!";
+        return "redirect:/restaurant/menu/1?msg=Dish updated successfully!";
     }
 
     @GetMapping("/delete/{id}")
@@ -72,7 +111,7 @@ public class DishMVCController {
             "Dish does not exist!";
 
         model.addAttribute("msg", status);
-        return "redirect:/restaurant/menu?msg=" + status;  
+        return "redirect:/restaurant/menu/1?msg=" + status;  
     }
 
 
