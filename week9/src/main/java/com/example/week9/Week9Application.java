@@ -1,24 +1,24 @@
-package com.example.week7;
+package com.example.week9;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.example.week7.models.Dish;
-import com.example.week7.services.DishService;
+import com.example.week9.models.Dish;
+import com.example.week9.services.DishService;
 
 @SpringBootApplication
-public class Week7Application implements CommandLineRunner {
+public class Week9Application implements CommandLineRunner {
 
 	private final DishService service;
 
 	// dep injection
-	public Week7Application(DishService service) {
+	public Week9Application(DishService service) {
 		this.service = service;
 	}
 
 	public static void main(String[] args) {
-		SpringApplication.run(Week7Application.class, args);
+		SpringApplication.run(Week9Application.class, args);
 	}
 
 	@Override
