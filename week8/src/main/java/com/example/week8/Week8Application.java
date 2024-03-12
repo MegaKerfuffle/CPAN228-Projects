@@ -23,7 +23,7 @@ public class Week8Application implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		// Add more dishes with the command line runner
+		// Add dishes with the command line runner
 		service.saveDish(new Dish(1, "Pizza", "Non-veg", 12));
 		service.saveDish(new Dish(2, "Chicken Sandwich", "Non-veg", 18));
 		service.saveDish(new Dish(3, "Shawarma", "Vegan", 10));

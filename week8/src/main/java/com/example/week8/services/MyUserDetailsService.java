@@ -12,7 +12,7 @@ import com.example.week8.models.MyUser;
 import com.example.week8.repositories.UserRepository;
 
 @Service
-public class MyUserDetailsService implements UserDetailsService{
+public class MyUserDetailsService implements UserDetailsService {
 
     private final UserRepository userRepo;
 

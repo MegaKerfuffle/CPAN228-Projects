@@ -39,7 +39,7 @@ public class DishMVCController extends ViewControllerBase {
             @RequestParam(required=false) String sortField,
             @RequestParam(required=false) String sortDirection
             ) {
-
+        
         // TODO: re-add filtering
         
         // Null checks for params
