@@ -1,4 +1,4 @@
-package com.example.assignment2.repositories;
+package com.example.assignment3.repositories;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.example.assignment2.models.Item;
+import com.example.assignment3.models.Item;
 
 
 @Repository

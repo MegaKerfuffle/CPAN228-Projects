@@ -1,4 +1,4 @@
-package com.example.assignment2.models;
+package com.example.assignment3.models;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

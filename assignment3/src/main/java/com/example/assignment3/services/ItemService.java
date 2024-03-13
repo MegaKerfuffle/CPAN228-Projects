@@ -1,4 +1,4 @@
-package com.example.assignment2.services;
+package com.example.assignment3.services;
 
 import java.util.List;
 import java.util.Optional;
@@ -10,8 +10,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.example.assignment2.models.Item;
-import com.example.assignment2.repositories.ItemRepository;
+import com.example.assignment3.models.Item;
+import com.example.assignment3.repositories.ItemRepository;
 
 @Service
 public class ItemService {

@@ -94,32 +94,6 @@
                     </ul>
                 </nav>
             </div>
-
-            <div th:if="${item}">
-                <!-- Form for adding items -->
-                <form th:object="${item}" method="post" th:action="@{/add-item}">
-                    <h3>Item Form</h3>
-                    <input type="hidden" th:field="*{id}">
-                    <div class="form-group">
-                        <label for="name">Name</label>
-                        <input th:field="*{name}" type="text" class="form-control" id="name">
-                    </div>
-                    <div class="form-group">
-                        <label for="name">Brand</label>
-                        <input th:field="*{brand}" type="text" class="form-control" id="brand">
-                    </div>
-                    <div class="form-group">
-                        <label for="name">Year</label>
-                        <input th:field="*{year}" type="number" class="form-control" id="year">
-                    </div>
-                    <div class="form-group">
-                        <label for="name">Price</label>
-                        <input th:field="*{price}" type="number" class="form-control" id="price">
-                    </div>
-                    <br/>
-                    <button type="submit" class="btn btn-primary">Add Item</button>
-                </form>
-            </div>
         </div>
     </body>
 </html>

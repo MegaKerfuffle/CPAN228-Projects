@@ -1,4 +1,4 @@
-package com.example.assignment2.controllers;
+package com.example.assignment3.controllers;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.example.assignment2.models.Item;
-import com.example.assignment2.services.ItemService;
+import com.example.assignment3.models.Item;
+import com.example.assignment3.services.ItemService;
+
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller

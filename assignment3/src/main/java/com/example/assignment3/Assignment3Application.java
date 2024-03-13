@@ -1,24 +1,24 @@
-package com.example.assignment2;
+package com.example.assignment3;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.example.assignment2.models.Item;
-import com.example.assignment2.services.ItemService;
+import com.example.assignment3.models.Item;
+import com.example.assignment3.services.ItemService;
 
 @SpringBootApplication
-public class Assignment2Application implements CommandLineRunner{
+public class Assignment3Application implements CommandLineRunner{
 
 	private final ItemService itemService;
 
 	/** Constructor for dependency injection */
-	public Assignment2Application(ItemService service) {
+	public Assignment3Application(ItemService service) {
 		itemService = service;
 	}
 
 	public static void main(String[] args) {
-		SpringApplication.run(Assignment2Application.class, args);
+		SpringApplication.run(Assignment3Application.class, args);
 	}
 
 	@Override
