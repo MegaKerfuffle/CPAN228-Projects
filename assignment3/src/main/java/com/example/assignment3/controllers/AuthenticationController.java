@@ -64,7 +64,7 @@ public class AuthenticationController {
         // Switch to handle potential errors
         switch (userService.saveUser(user)) {
             case ALREADY_REGISTERED:
-                return "redirect:/register?msg=Username taken, please try again!";
+                return "redirect:/register?msg=Username taken, please try another!";
             case UNKNOWN_ERROR:
                 return "redirect:/register?msg=An unknown error has occured, please try again!";
             default: break;

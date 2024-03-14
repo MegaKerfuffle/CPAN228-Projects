@@ -14,18 +14,26 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
-
+/** 
+ * Controller for endpoints that are restricted to users with
+ * either 'ADMIN' or 'EMPLOYEE' roles.   
+ */
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
     private final ItemService itemService;
 
+    /** Dependency injection of item service */
     public AdminController(ItemService itemService) {
         this.itemService = itemService;
     }
 
-    //#region GET Mappings
+    //#region GET mappings
+
+    /**
+     * Retrieves the item form; can be used for both adding new items
+     * or updating existing ones, based on the endpoint used.
+     */
     @GetMapping(value = { "/add-item", "/update-item/{id}" }) 
     public String getForm(Model model, @PathVariable Optional<Integer> id) {
         Item item;
@@ -44,6 +52,7 @@ public class AdminController {
         return "item-form";
     }
 
+    /** Deletes the item matching the given ID from the catalog. */
     @GetMapping("/delete/{id}")
     public String getRemoveItem(@PathVariable int id, Model model) {
         Optional<Item> toRemove = itemService.getItemById(id);
@@ -54,10 +63,17 @@ public class AdminController {
         itemService.deleteItem(toRemove.get());
         return "redirect:/catalog?msg=Item removed successfully!";
     }
+
     //#endregion
 
 
+    //#region POST mappings
 
+    /**
+     * Adds a new item or updates an existing item in the catalog.
+     * I don't think this project has an update functionality 
+     * elsewhere, though, so yeah.
+     */
     @PostMapping("/post-item")
     public String postItem(
         @ModelAttribute Item item, 
@@ -65,7 +81,9 @@ public class AdminController {
         ) {
         itemService.saveItem(item);
         
-        String alert = isUpdate == null ? "Item update successfully!" : "Item added successfully!";
+        String alert = isUpdate == null ? "Item updated successfully!" : "Item added successfully!";
         return "redirect:/catalog?msg=" + alert;
     }
+
+    //#endregion
 }

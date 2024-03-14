@@ -19,7 +19,6 @@ public class UserService {
         this.bCryptEncoder = encoder;
     }
 
-
     /** Save a newly registered user to the database. */
     public RegistrationStatus saveUser(BusinessUser user) {
         // Guard clauses to prevent registration in certain circumstances.
@@ -36,7 +35,6 @@ public class UserService {
         userRepo.save(user);
         return RegistrationStatus.SUCCESS;
     }
-
     
     /** Provides more details about a user's registration status */
     public enum RegistrationStatus {

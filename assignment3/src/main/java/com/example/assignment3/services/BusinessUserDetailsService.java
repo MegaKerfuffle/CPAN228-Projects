@@ -22,7 +22,6 @@ public class BusinessUserDetailsService implements UserDetailsService {
         this.userRepo = userRepo;
     }
 
-
     /**
      * Turns our user instances into `UserDetails` instances that Spring Security 
      * uses for authentication.

@@ -10,14 +10,14 @@ import org.springframework.stereotype.Repository;
 
 import com.example.assignment3.models.Item;
 
-
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Integer> {
 
+    /** Query the database for items, based on their brand and year of production */
     @Query(value = "SELECT * FROM item WHERE brand='?1' AND production_year=?2")
     public List<Item> findByBrandAndYear(String brand, int year);
 
-    // I can't get this to work, which sucks.
+    // Pretty sure this still doesn't work
     @Query(value = "SELECT * FROM item WHERE brand='?1' AND production_year=?2")
     public Page<Item> findByBrandAndYear(String brand, int year, Pageable pageable);
 }

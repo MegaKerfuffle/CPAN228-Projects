@@ -22,6 +22,7 @@ public class Item {
     private int id;
 
     private String name;
+    
     private String brand;
 
     @Column(name = "production_year")

@@ -30,7 +30,7 @@ public class CatalogController {
     private final UserRepository userRepo;
 
 
-    /** Constructor for dependency injection of `ItemService` */
+    /** Constructor for dependency injection of `ItemService` && `UserRepository` */
     public CatalogController(ItemService service, UserRepository userRepo) {
         this.service = service;
         this.userRepo = userRepo;
@@ -104,7 +104,6 @@ public class CatalogController {
         // Add filters
         model.addAttribute("brand", brand);
         model.addAttribute("year", year);
-
 
         return "catalog";
     }

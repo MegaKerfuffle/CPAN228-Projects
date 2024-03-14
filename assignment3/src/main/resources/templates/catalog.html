@@ -12,7 +12,7 @@
     </head>
     <body>
         <div class="d-flex flex-column">
-            <div class="m-2 pb-4">
+            <div class="m-5 pb-4">
                 <h1><span th:text="${businessName}"></span> Catalog </h1>
                 <h3>Welcome, <span th:text="${username}"></span>!</h3>
             </div>
@@ -58,7 +58,6 @@
             <div>
                 <div class="alert alert-primary" role="alert" th:if= "${msg}" th:text="${msg}"></div>
             </div>
-            
 
             <!-- Menu table -->
             <table class="table table-dark">
@@ -100,11 +99,11 @@
             </table>
             
             <!-- Filtering -->
-            <form class="mb-2 align-self-center" method="get" th:action="@{/catalog/1}">
-                <input type="text" name="brand" placeholder="Brand"/>
-                <input type="number" name="year" placeholder="Year"/>
-                <button type="submit" class="btn btn-primary">Filter</button>
-                <a type="reset" class="btn btn-danger" href="/catalog/1">Reset</a>
+            <form class="mb-2 align-self-center d-flex flex-row" method="get" th:action="@{/catalog/1}">
+                <input class="form-control" type="text" name="brand" placeholder="Brand"/>
+                <input class="form-control" type="number" name="year" placeholder="Year"/>
+                <button class="btn btn-primary" type="submit" >Filter</button>
+                <a class="btn btn-danger" type="reset" href="/catalog/1">Reset</a>
             </form>
 
             <!-- Pagination -->
