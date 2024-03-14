@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @Controller
@@ -23,42 +25,47 @@ public class AdminController {
         this.itemService = itemService;
     }
 
-    //#region ADMIN GET MAPPINGS
-    @GetMapping("/item-form")
-    public String getForm(Model model) {
-        
-        return "catalog";
-    }
-    
+    //#region GET Mappings
+    @GetMapping(value = { "/add-item", "/update-item/{id}" }) 
+    public String getForm(Model model, @PathVariable Optional<Integer> id) {
+        Item item;
+        // If ID is present, we're updating.
+        if (id.isPresent()) {
+            Optional<Item> itemOptional = itemService.getItemById(id.get());
+            if (!itemOptional.isPresent())
+                return "redirect:/catalog?msg=Invalid item ID given!";
+            item = itemOptional.get();
+        }
+        // If ID not present, we're adding.
+        else
+            item = new Item();
 
+        model.addAttribute("item", item);
+        return "item-form";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String getRemoveItem(@PathVariable int id, Model model) {
+        Optional<Item> toRemove = itemService.getItemById(id);
+        if (!toRemove.isPresent()) {
+            return "redirect:/catalog?msg=Couldn't remove item!";
+        }
+
+        itemService.deleteItem(toRemove.get());
+        return "redirect:/catalog?msg=Item removed successfully!";
+    }
     //#endregion
 
 
 
-    // TODO: add path var or something that indicates add vs. update of item
-    @PostMapping(value = { "/post-item", "/post-item/{isUpdate}" })
+    @PostMapping("/post-item")
     public String postItem(
         @ModelAttribute Item item, 
-        @PathVariable boolean isUpdate
+        @RequestParam(required = false) String isUpdate
         ) {
         itemService.saveItem(item);
         
-        String alert = isUpdate ? "Item update successfully!" : "Item added successfully!";
+        String alert = isUpdate == null ? "Item update successfully!" : "Item added successfully!";
         return "redirect:/catalog?msg=" + alert;
     }
-
-    @GetMapping("/delete/{id}")
-    public String getRemoveDish(@PathVariable int id, Model model) {
-        Optional<Item> toRemove = itemService.getItemById(id);
-        if (!toRemove.isPresent()) {
-
-        }
-
-
-
-        // TODO: add alert message
-        return "redirect:/catalog";
-    }
-    
-    
 }

@@ -1,18 +1,22 @@
 package com.example.assignment3.controllers;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.assignment3.models.BusinessUser;
 import com.example.assignment3.models.Item;
+import com.example.assignment3.repositories.UserRepository;
 import com.example.assignment3.services.ItemService;
-
-import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class CatalogController {
@@ -23,11 +27,13 @@ public class CatalogController {
     private int pageSize;
     
     private final ItemService service;
+    private final UserRepository userRepo;
 
 
     /** Constructor for dependency injection of `ItemService` */
-    public CatalogController(ItemService service) {
+    public CatalogController(ItemService service, UserRepository userRepo) {
         this.service = service;
+        this.userRepo = userRepo;
     }
 
     /** Redirects certain endpoints back to the catalog. */
@@ -36,6 +42,7 @@ public class CatalogController {
         return "redirect:/catalog/1";
     }
 
+    /** Retrieves the catalog page */
     @GetMapping("/catalog/{pageNumber}")
     public String getCatalog(
         Model model, 
@@ -46,11 +53,31 @@ public class CatalogController {
         @RequestParam(required=false) String brand,
         @RequestParam(required=false) Integer year
         ) {
+        
+        // Always-added attributes
+        model.addAttribute("businessName", businessName);
+
+        // Add alert msg
+        model.addAttribute("alert", alert);
+
+        // Get currently logged-in user and pass some details as attributes.
+        // This was annoying and completely unnecessary, but kinda cool.
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails)auth.getPrincipal();
+        Optional<BusinessUser> userOptional = userRepo.findByUsername(userDetails.getUsername());
+        if (userOptional.isPresent()) {
+            BusinessUser user = userOptional.get();
+
+            // Add user attributes
+            model.addAttribute("username", user.getUsername());
+            model.addAttribute("role", user.getRole());
+        }
 
 
+        // If filtered, skip the pagination
         if (brand != null && year != null) {
             model.addAttribute("items", service.getFilteredItems(brand, year));
-            return getTemplate("catalog", model);
+            return "catalog";
         }
 
         // Null check parameters
@@ -64,9 +91,6 @@ public class CatalogController {
         model.addAttribute("items", items.getContent());
         model.addAttribute("item", new Item());
 
-        // Add alert msg
-        model.addAttribute("alert", alert);
-        
         // Add pagination details
         model.addAttribute("totalItems", items.getTotalElements());
         model.addAttribute("totalPages", items.getTotalPages());
@@ -81,19 +105,7 @@ public class CatalogController {
         model.addAttribute("brand", brand);
         model.addAttribute("year", year);
 
-        return getTemplate("catalog", model);
-    }
-    
 
-    @PostMapping("/add-item")
-    public String postItem(@ModelAttribute Item item) {
-        service.saveItem(item);
-        return "redirect:/catalog/1?alert=Added item successfully!";
-    }
-    
-
-    public String getTemplate(String name, Model model) {
-        model.addAttribute("businessName", businessName);
-        return name;
+        return "catalog";
     }
 }

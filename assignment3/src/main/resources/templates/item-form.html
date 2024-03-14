@@ -13,7 +13,7 @@
     <body>
         
         <!-- Form for adding items -->
-        <form th:object="${item}" method="post" th:action="@{/add-item}">
+        <form th:object="${item}" method="post" th:action="@{/admin/post-item}">
             <h3>Item Form</h3>
             <input type="hidden" th:field="*{id}">
             <div class="form-group">
