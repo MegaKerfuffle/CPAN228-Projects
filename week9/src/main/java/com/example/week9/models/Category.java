@@ -1,4 +1,4 @@
-package com.example.week8.models;
+package com.example.week9.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,14 +13,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-// Marks this as an ORM Entity
 @Entity
-public class Dish {
+public class Category {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
     private String name;
-    private String category;
-    private double price;
+    private String color;
 }
