@@ -26,6 +26,7 @@ public class DishController {
     private final CategoryService categoryService;
 
 
+    /** Injects dependencies: Dish Service, Category Service */
     public DishController(DishService dishService, CategoryService categoryService) {
         this.dishService = dishService;        
         this.categoryService = categoryService;
@@ -48,7 +49,7 @@ public class DishController {
     /** Attempt to add a new dish */
     @PostMapping("/dishes/add")
     public ResponseEntity<String> postAddDish(@RequestBody Dish dish) {
-        // Whole process just to get the dish's category to have the correct ID
+        // Ensure the dish's category isn't duplicated on add
         Category existing = categoryService.getCategoryByName(dish.getCategory().getName());
         if (existing != null) {
             dish.setCategory(existing);
@@ -80,7 +81,7 @@ public class DishController {
     /** Updates an existing dish */
     @PutMapping("dishes/update/{id}")
     public ResponseEntity<String> putUpdateDish(@PathVariable Integer id, @RequestBody Dish dish) {
-        // Whole process just to get the dish's category to have the correct ID
+        // Ensure the dish's category isn't duplicated on update
         Category existing = categoryService.getCategoryByName(dish.getCategory().getName());
         if (existing != null) {
             dish.setCategory(existing);

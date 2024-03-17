@@ -35,7 +35,7 @@ public class Dish {
     @ManyToOne
     @JoinColumn(name = "fk_category_id")
     // With persist, saving a dish record will also save a category record.
-    // And also, on deletion of a dish, the category will *not* be removed.
+    // On deletion of a dish, the category will *not* be removed.
     @Cascade(CascadeType.PERSIST)
     private Category category;
 }
