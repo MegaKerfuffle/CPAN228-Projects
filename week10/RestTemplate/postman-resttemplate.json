@@ -1,0 +1,18 @@
+{
+	"info": {
+		"_postman_id": "dfeb3333-d74a-45ba-8450-e147192d2de3",
+		"name": "Spring RestTemplate Demo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33647935"
+	},
+	"item": [
+		{
+			"name": "Get Albums (all)",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}
